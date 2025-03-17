@@ -9,9 +9,14 @@ redirect_from:
 
 {% include base_path %}
 
+Jonathan Mejorado Lopez
+======
+ESIME Zacatenco
+jmejoradol1800@alumno.ipn.mx
+obviousfancy.github.io
+
 Education
 ======
-
 * Maestria en ciencias de la Ingenieria Electrónica, ESIME Zacatenco - Instituto Politecnico Nacional, (Graduación prevista)2026
 * Ingenieria en Comunicaciones y Electrónica, Instituto Politecnico Nacional, 2024
 
@@ -39,7 +44,7 @@ Skills
   * STM32
   * ESP32
 * Trabajo en equipo
-
+<!--
 Publications
 ======
   <ul>{% for post in site.publications reversed %}
@@ -57,7 +62,8 @@ Teaching
   <ul>{% for post in site.teaching reversed %}
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
-  
+
 Service and leadership
 ======
 * Currently signed in to 43 different slack teams
+-->
