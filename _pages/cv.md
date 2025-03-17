@@ -11,31 +11,32 @@ redirect_from:
 
 Jonathan Mejorado Lopez
 ======
-ESIME Zacatenco
-jmejoradol1800@alumno.ipn.mx
+ESIME Zacatenco  
+jmejoradol1800@alumno.ipn.mx  
 obviousfancy.github.io
 
 Education
 ======
 * Maestria en ciencias de la Ingenieria Electrónica, ESIME Zacatenco - Instituto Politecnico Nacional, (Graduación prevista)2026
 * Ingenieria en Comunicaciones y Electrónica, Instituto Politecnico Nacional, 2024
+<!--
+ Work experience
+ ======
+* Spring 2024: Academic Pages Collaborator
+  * GitHub University
+  * Duties includes: Updates and improvements to template
+  * Supervisor: The Users
 
-# Work experience
-# ======
-#* Spring 2024: Academic Pages Collaborator
-#  * GitHub University
-#  * Duties includes: Updates and improvements to template
-#  * Supervisor: The Users
+* Fall 2015: Research Assistant
+  * GitHub University
+  * Duties included: Merging pull requests
+  * Supervisor: Professor Hub
 
-#* Fall 2015: Research Assistant
-#  * GitHub University
-#  * Duties included: Merging pull requests
-#  * Supervisor: Professor Hub
-
-#* Summer 2015: Research Assistant
-#  * GitHub University
-#  * Duties included: Tagging issues
-#  * Supervisor: Professor Git
+* Summer 2015: Research Assistant
+  * GitHub University
+  * Duties included: Tagging issues
+  * Supervisor: Professor Git
+-->
   
 Skills
 ======
