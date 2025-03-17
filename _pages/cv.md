@@ -11,35 +11,34 @@ redirect_from:
 
 Education
 ======
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
-* M.S. in Jekyll, GitHub University, 2014
-* B.S. in GitHub, GitHub University, 2012
 
-Work experience
-======
-* Spring 2024: Academic Pages Collaborator
-  * GitHub University
-  * Duties includes: Updates and improvements to template
-  * Supervisor: The Users
+* Maestria en ciencias de la Ingenieria Electrónica, ESIME Zacatenco - Instituto Politecnico Nacional, (Graduación prevista)2026
+* Ingenieria en Comunicaciones y Electrónica, Instituto Politecnico Nacional, 2024
 
-* Fall 2015: Research Assistant
-  * GitHub University
-  * Duties included: Merging pull requests
-  * Supervisor: Professor Hub
+# Work experience
+# ======
+#* Spring 2024: Academic Pages Collaborator
+#  * GitHub University
+#  * Duties includes: Updates and improvements to template
+#  * Supervisor: The Users
 
-* Summer 2015: Research Assistant
-  * GitHub University
-  * Duties included: Tagging issues
-  * Supervisor: Professor Git
+#* Fall 2015: Research Assistant
+#  * GitHub University
+#  * Duties included: Merging pull requests
+#  * Supervisor: Professor Hub
+
+#* Summer 2015: Research Assistant
+#  * GitHub University
+#  * Duties included: Tagging issues
+#  * Supervisor: Professor Git
   
 Skills
 ======
-* Skill 1
-* Skill 2
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
-* Skill 3
+* Diseño de PCB's
+* Programación de microcontroladores
+  * STM32
+  * ESP32
+* Trabajo en equipo
 
 Publications
 ======
