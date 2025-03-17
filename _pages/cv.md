@@ -1,6 +1,7 @@
 ---
 layout: archive
 title: "CV"
+hide_title: true
 permalink: /cv/
 author_profile: true
 redirect_from:
@@ -13,7 +14,7 @@ redirect_from:
 
 
 Jonathan Mejorado Lopez
-======
+====== {: style="text-align: center;"}
 ESIME Zacatenco  
 jmejoradol1800@alumno.ipn.mx  
 obviousfancy.github.io
