@@ -7,13 +7,17 @@ redirect_from:
   - /resume
 ---
 
-{% include base_path %}
+<!--
+ {% include base_path %}
+-->
+
 
 Jonathan Mejorado Lopez
 ======
 ESIME Zacatenco  
 jmejoradol1800@alumno.ipn.mx  
 obviousfancy.github.io
+{: style="text-align: center;"}
 
 Education
 ======
