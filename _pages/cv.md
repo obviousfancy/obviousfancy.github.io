@@ -19,6 +19,8 @@ Education
 ======
 * Maestria en ciencias de la Ingenieria Electrónica, ESIME Zacatenco - Instituto Politecnico Nacional, (Graduación prevista)2026
 * Ingenieria en Comunicaciones y Electrónica, Instituto Politecnico Nacional, 2024
+
+  
 <!--
  Work experience
  ======
@@ -45,6 +47,8 @@ Skills
   * STM32
   * ESP32
 * Trabajo en equipo
+
+  
 <!--
 Publications
 ======
