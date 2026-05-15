@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro'          
+import TarjetaProyecto from '../components/Tarjetaproyecto.astro'      
+import { getCollection } from 'astro:content'
+
+const proyectos = await getCollection('proyectos')
+const proyectosOrdenados = proyectos.sort((a, b) => a.data.orden - b.data.orden) 
+---
+<!-- Importamos el layout para usarlo en esta página no necesitamos importar nada mas layout tiene todo-->
+
+
+<Layout>
+    <!----------------------- Encabezado de la página ---------------------------------->
+    <div class="text-center py-16 px-8">
+        <h1 class="text-4xl font-bold">Mis Proyectos</h1>
+        <h2 class="text-gray-300 text-xl mt-4">
+          STM32 · ESP32 · Raspberry Pi · Software · IoT
+        </h2>
+    </div>
+    <!----------------------------------------------------------------------------------->
+
+    <!----------------------------------- Grid de tarjetas ------------------------------------------>
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 pb-16 max-w-6xl mx-auto">
+  
+        {proyectosOrdenados.map(proyecto => (
+            <TarjetaProyecto 
+                titulo={proyecto.data.titulo}
+                descripcion={proyecto.data.descripcion}
+                tecnologias={proyecto.data.tecnologias.join(' · ')}
+                slug={proyecto.slug}
+                hashtags={proyecto.data.hashtags}
+                url={`/proyectos/${proyecto.slug}`}
+            />
+        ))}
+
+    </section>
+
+    <!------------------------------------------------------------------------------------------->
+
+
+
+    <!------------------------------  Botones al final ----------------------------------------->
+    <div class="flex justify-center gap-6 pb-16">           <!-- gap sirve para crear un espacio entre los elementos, cada valor equivale a 4 px -->
+
+      <a href="https://github.com/obviousfancy" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded transition">
+        Github
+      </a>
+
+      <a href="/" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded transition">
+        Regresar a home
+      </a>
+
+    </div>
+    <!----------------------------------------------------------------------------------------->
+
+</Layout>

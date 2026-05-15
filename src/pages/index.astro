@@ -1,11 +1,24 @@
----
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+--- 
+import Layout from '../layouts/Layout.astro'     
 ---
 
 <Layout>
-	<Welcome />
+    <section class = "h-screen flex flex-col items-center justify-center">        <!-- contenedor de la sección -->
+
+    <h1 class=" text-4xl">
+      Hola, Soy Jonathan Mejorado o mejor conocido como Obviousfancy
+    </h1> 
+    <h2 class = "text-gray-300  text-2xl">
+      Embedded Systems Engineer | Software Developer | Tech Enthusiast
+    </h2>
+
+    <a href="/proyectos" class="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      Ver proyectos
+    </a>
+
+    <a href="/blog" class="bg-red-500  hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+      Ver blog
+    </a>
+
+    </section>
 </Layout>

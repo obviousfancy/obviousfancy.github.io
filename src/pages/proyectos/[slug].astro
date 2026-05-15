@@ -1,0 +1,61 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import { getCollection } from 'astro:content'
+
+// Defines qué páginas existen
+export async function getStaticPaths(){
+    const proyectos = await getCollection('proyectos')
+    return proyectos.map(proyecto => ({
+        params: { slug: proyecto.slug }
+    }))
+}
+
+// Recibe el slug y los props de la función anterior
+const {proyecto} = Astro.props
+const {Content } = await proyecto.render()
+const { titulo, descripcion, tecnologias, hashtags, github, estado,youtube } = proyecto.data
+
+---
+
+<Layout>
+    <div class="max-w-3xl mx-auto px-8 py-16">          
+        <!-- max-w-3xl sirve para limitar el ancho máximo del contenedor mx-auto es para centrarlo 
+        px-8 y py-16 son para agregar padding horizontal y vertical respectivamente 
+        -->
+        <!-- Encabezado -->
+         <a href="/proyectos" class="text-gray-400 hover:text-white transition-colors duration-300 mb-4 inline-block">
+            ← Volver a proyectos
+         </a>
+        <!-- Título del proyecto -->
+        <h1 class="text-5xl font-bold mt-6">{titulo}</h1>
+        <!-- Descripción del proyecto -->   
+        <p class="text-gray-300 text-xl mt-4">{descripcion}</p>
+
+        <!-- Estado -->
+         <span class="mt-6 inline-block bg-blue-600 text-white text-sm px-3 py-1 rounded-full">
+            {estado}
+         </span>
+
+        <!-- Tecnologías utilizadas con espaciado entre ellas -->
+        <div class="flex gap-6 mt-6 flex-wrap ">
+            {tecnologias.map(tech =>(
+
+            <span class="bg-gray-700 text-gray-300 text-sm px-3 py-1 rounded-full">
+                {tech}
+            </span>
+            ))}
+        </div>
+
+         <!-- Markdown text-->
+        <div class="prose prose-invert mt-12">
+        <Content />
+        </div>
+
+        
+        <!-- Link al repo -->
+        <a href={github} class="mt-8 inline-block bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded transition">
+        Ver en GitHub →
+        </a>
+
+    </div>
+</Layout>
