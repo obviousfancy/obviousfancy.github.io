@@ -27,9 +27,9 @@ const proyectosOrdenados = proyectos.sort((a, b) => a.data.orden - b.data.orden)
                 titulo={proyecto.data.titulo}
                 descripcion={proyecto.data.descripcion}
                 tecnologias={proyecto.data.tecnologias.join(' · ')}
-                slug={proyecto.slug}
+                slug={proyecto.id}
                 hashtags={proyecto.data.hashtags}
-                url={`/proyectos/${proyecto.slug}`}
+                url={`/proyectos/${proyecto.id}`}
             />
         ))}
 

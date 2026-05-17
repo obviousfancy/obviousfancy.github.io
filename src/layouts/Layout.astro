@@ -5,11 +5,18 @@ import Navbar from '../components/Navbar.astro'
 
 <html lang="es">
   <head>
-     <meta charset="UTF-8" />   <!-- ← esta línea, sin ella se rompen tildes y ñ -->
-    <meta name="viewport" content="width=device-width" />
+    <script is:inline>  
+      const temaGuardado = localStorage.getItem('theme') || 'dark';  //<!-- Cargamos el tema guardado en localStorage, o por defecto "dark" si no hay ninguno -->
+      document.documentElement.setAttribute('data-theme', temaGuardado);
+    </script>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+      <meta charset="UTF-8" />   <!-- ← esta línea, sin ella se rompen tildes y ñ -->
+      <meta name="viewport" content="width=device-width" />
     <title>Obviousfancy</title>
   </head>
-  <body class="bg-gray-900 text-white">
+  
     <Navbar />
     <slot />
   </body>

@@ -1,8 +1,33 @@
-<nav class="bg-gray-800 text-white px-8 py-4 flex gap-10 items-center">
+<nav class="bg-(--bg-1) text-(--fg-0) px-8 py-4 flex gap-10 items-center">
   <span>Obviousfancy</span>
-  <a href="/"  class=" hover:bg-gray-900 text-white font-bold py-2 px-4 rounded"> Inicio </a>
-  <a href="/proyectos" class=" hover:bg-gray-900 text-white font-bold py-2 px-4 rounded"> Proyectos </a>
-  <a href="/blog" class=" hover:bg-gray-900 text-white font-bold py-2 px-4 rounded"> Blog </a>
+  <a href="/"  class=" hover:bg-(--bg-2) text-(--fg-1) font-bold py-2 px-4 rounded"> Inicio </a>
+  <a href="/proyectos" class=" hover:bg-(--bg-2) text-(--fg-1) font-bold py-2 px-4 rounded"> Proyectos </a>
+  <a href="/blog" class=" hover:bg-(--bg-2) text-(--fg-1) font-bold py-2 px-4 rounded"> Blog </a>
 
+  <!-----
+  Agregamos boton toggle para cambiar entre temas claro y oscuro. El boton sera un deslizable con los iconos de un sol y una luna, y al hacer click cambiara el atributo data-theme del elemento html entre "light" y "dark". El tema por defecto sera el oscuro, pero si el usuario ya ha seleccionado un tema previamente, se cargara ese tema al iniciar la pagina.
+  --- -->
+  <button id="theme-toggle" class="ml-auto p-2 w-9 h-9 rounded-full hover:bg-(--bg-2)">
+    <span id="theme-icon" class="text-(--fg-1) text-lg">🌙</span>
+  </button>
 
+  <script>
+    const botonToggle = document.querySelector('#theme-toggle');        //<!-- Obtenemos el icono del tema para cambiarlo al hacer click -->
+    const iconoTema = document.querySelector('#theme-icon');            //<!-- Función para cambiar el tema -->
+    const html = document.documentElement;                              //<!-- Obtenemos el tema guardado en localStorage, o por defecto "dark" si no hay ninguno -->
+    if (botonToggle && iconoTema) {
+    const temaGuardado = localStorage.getItem('theme') || 'dark'
+    html.setAttribute('data-theme', temaGuardado)
+    iconoTema.textContent = temaGuardado === 'dark' ? '🌙' : '☀️'
+
+    botonToggle.addEventListener('click', () => {
+      const temaActual = html.getAttribute('data-theme') || 'dark';    //<!-- Cambiamos el tema al hacer click -->
+
+      const nuevoTema = temaActual === 'dark' ? 'light' : 'dark';     //<!-- Guardamos el nuevo tema en localStorage -->
+      html.setAttribute('data-theme', nuevoTema);
+      localStorage.setItem('theme', nuevoTema);                          //<!-- Cambiamos el icono del tema -->
+      iconoTema.textContent = nuevoTema === 'dark' ? '🌙' : '☀️';
+    });
+  }
+  </script>
 </nav>

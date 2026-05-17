@@ -1,18 +1,19 @@
 ---
 import Layout from '../../layouts/Layout.astro'
-import { getCollection } from 'astro:content'
+import { getCollection, render } from 'astro:content'
 
 // Defines qué páginas existen
 export async function getStaticPaths(){
     const proyectos = await getCollection('proyectos')
     return proyectos.map(proyecto => ({
-        params: { slug: proyecto.slug }
+        params: { slug: proyecto.id },
+        props: { proyecto }  // Esto se pasa a la página como props
     }))
 }
 
 // Recibe el slug y los props de la función anterior
 const {proyecto} = Astro.props
-const {Content } = await proyecto.render()
+const {Content} = await render(proyecto)  // render es para convertir el markdown a HTML
 const { titulo, descripcion, tecnologias, hashtags, github, estado,youtube } = proyecto.data
 
 ---
@@ -38,7 +39,7 @@ const { titulo, descripcion, tecnologias, hashtags, github, estado,youtube } = p
 
         <!-- Tecnologías utilizadas con espaciado entre ellas -->
         <div class="flex gap-6 mt-6 flex-wrap ">
-            {tecnologias.map(tech =>(
+            {tecnologias.map((tech: string) =>(
 
             <span class="bg-gray-700 text-gray-300 text-sm px-3 py-1 rounded-full">
                 {tech}
