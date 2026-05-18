@@ -20,7 +20,7 @@ El problema aparece cuando el LED necesita más de 20mA, cuando tienes 30 LEDs e
 
 Un MOSFET de canal N actúa como un interruptor controlado por voltaje. El ESP32 manda 3.3V al gate, el MOSFET abre el canal, la corriente fluye del drain al source. El LED enciende.
 
-La diferencia crítica: el ESP32 no maneja la corriente del LED — solo controla el gate. La corriente pesada viene directo de la fuente de alimentación.
+La diferencia crítica: el ESP32 no maneja la corriente del LED — solo controla el gate. La corriente pesada viene directo de la fuente de alimentación. perce
 
 ```
 ESP32 GPIO → Gate (MOSFET) → LED → GND
