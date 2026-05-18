@@ -1,4 +1,13 @@
-# Astro Starter Kit: Basics
+# obviousfancy.github.io
+
+Portfolio personal de Jonathan Mejorado — Embedded Systems Engineer.
+
+Construido con Astro + Tailwind CSS.
+
+## Stack
+- Astro v6
+- Tailwind CSS v4
+- GitHub Pages + GitHub Actions
 
 ```sh
 npm create astro@latest -- --template basics
