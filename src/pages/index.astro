@@ -4,27 +4,22 @@ import Terminal from '../components/terminal.astro'
 ---
 
 <Layout>
-    <section class = "h-screen flex flex-col items-center justify-center">        <!-- contenedor de la sección -->
+    <section class = "py-24 flex flex-col items-center w-full px-8">        <!-- contenedor de la sección -->
 
-    <h1 class=" text-4xl">
-      Hola, Soy Jonathan Mejorado o mejor conocido como Obviousfancy
-    </h1> 
-    <h2 class = "text-gray-300  text-2xl">
-      Embedded Systems Engineer | Software Developer | Tech Enthusiast
-    </h2>
-    <Terminal />
+    
+      <Terminal />
 
 
 
-     <div class="flex justify-center gap-6 pb-16"> 
+      <div class="flex justify-center gap-6 pb-16"> 
 
-    <a href="/proyectos" class="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-      Ver proyectos
-    </a>
+          <a href="/proyectos" class="bg-blue-500  hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Ver proyectos
+          </a>
 
-    <a href="/blog" class="bg-red-500  hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-      Ver blog
-    </a>
+          <a href="/blog" class="bg-red-500  hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+            Ver blog
+          </a>
       </div>
     </section>
 </Layout>
