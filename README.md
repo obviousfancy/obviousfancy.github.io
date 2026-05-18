@@ -2,7 +2,7 @@
 
 Portfolio personal de Jonathan Mejorado — Embedded Systems Engineer.
 
-Construido con Astro + Tailwind CSS.
+Construido con Astro + Tailwind CSS listo
 
 ## Stack
 - Astro v6
