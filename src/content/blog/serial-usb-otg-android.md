@@ -39,6 +39,7 @@ manager.requestPermission(device, pendingIntent)
 
 Android requiere permiso explícito del usuario para acceder a dispositivos USB. Eso significa un diálogo la primera vez — no hay vuelta atrás.
 
+Por ello necesitamos que 
 ## Lo que hace SerialMCU
 
 - Detecta automáticamente el dispositivo conectado
