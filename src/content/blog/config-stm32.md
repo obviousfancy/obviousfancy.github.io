@@ -139,12 +139,10 @@ Este tutorial es para poder realizar la configuracion de un proyecto STM32 con e
     - Access to Board Selector:  Esta opcion es para cuando tengamos una tarjeta de desarrollo propia de STM32
    - Access to Example Selector: Esta opcion es para ejemplos especificos incluidos especificamente para las tarjetas de desarrollo STM32
 
-<div align="center">
+<!-- En lugar del div HTML, usa la sintaxis de Markdown con una ruta relativa desde el archivo .md -->
+![options](../../assets/blog/stm32cfg/options.png)
 
-<img src="/src/assets/blog/stm32cfg/options.png" alt="imagen" width="500">
-
-*Opciones de configuracion STM32*
-
+<div align="center"><em>options</em></div>
 </div>
 
 ---
