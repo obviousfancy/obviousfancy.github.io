@@ -32,7 +32,7 @@ orden: 1
 <details>
 <summary>BASH</summary>
 
-```
+```bash
 section "STM32CubeIDE"
     log "Buscando instalador de STM32CubeIDE..."
 
