@@ -150,57 +150,48 @@ Este tutorial es para poder realizar la configuracion de un proyecto STM32 con e
 3. En este caso al usar una Bluepill, la cual no es una tarjeta de desarrollo propia de STM32, necesitaremos seleccionar la opcion 1 que es Acces to MCU Selector, y dentro buscaremos el numero de parte STM32F103C8T6
 4. Seleccionaremos y daremos clic en start project
 
-<div align="center">
+![stm32f103c8t6](../../assets/blog/stm32cfg/mcuselect.png)
 
-<img src="/src/assets/blog/stm32cfg/mcuselect.png" alt="imagen" width="500">
-
-*STM32F103C8T6*
-
+<div align="center"><em>stm32f103c8t6</em></div>
 </div>
-
 ---
 
 5. Nos abrira una nueva ventana en la cual aparecen todos los pines del microcontrolador, directamente sobre los cuales podremos activar las funcionalidades de cada pin individual
 
-<div align="center">
 
-<img src="/src/assets/blog/stm32cfg/bluepillcfg.png" alt="imagen" width="500">
+![ConfigScreen](../../assets/blog/stm32cfg/bluepillcfg.png)
 
-*Pantalla de configuracion*
-
+<div align="center"><em>ConfigScreen</em></div>
 </div>
-
 ---
 
 6. Para el caso especifico de esta placa tenemos un led en el PC13, por lo cual buscaremos el pin PC13 dentro de la imagen de el microcontrolador que tenemos del lado derecho , y lo colocaremos como GPIO_Output
 
-<div align="center">
 
-<img src="/src/assets/blog/stm32cfg/pc13.png" alt="imagen" width="500">
 
-*Pin PC13 como GPIO Output*
 
+![PC13](../../assets/blog/stm32cfg/pc13.png)
+
+<div align="center"><em>PC13</em></div>
 </div>
 
 7. Configuraremos los relojes, para ello iremos a el apartado izquierdo y daremos clic en la pestanita que dice:
  - System Core -> RCC -> HSE/LSE
 8. En estas dos opciones seleccionaremos en ambas Crystal/Ceramic Resonator
 
-<div align="center">
 
-<img src="/src/assets/blog/stm32cfg/hselse.png" alt="imagen" width="500">
+![Relojes](../../assets/blog/stm32cfg/hselse.png)
 
-*Relojes*
-
+<div align="center"><em>Relojes</em></div>
 </div>
 
 9. Posterior, iremos a la pestana **Clock Configuration**, que se encuentra en la parte superior, en la cual buscaremos, el bloque Input Frequency  de HSE y de LSE que podremos encontrar en la parte izquierda de todo el diagrama, en los cuales configuraremos respectivamente los relojes de acuerdo a los que tengamos en nuestro microcontrolador. 
 En este caso y en la mayoria de bluepills contamos con un oscilador de baja frecuencia de 32.768 Khz que seria nuestro LSE, y un oscilador de alta frecuencia que seria nuestro HSE siendo este de 8 MHz segun el esquematico que podemos ver en la imagen, estos valores, verificamos que tengan su correspondiente en el mapa de relojes y procedemos.
 
-<div align="center">
 
-<img src="/src/assets/blog/stm32cfg/hselsesch.png" alt="imagen" width="500">
 
-*Cristales incluidos*
 
+![Cristales](../../assets/blog/stm32cfg/hselsesch.png)
+
+<div align="center"><em>Cristales</em></div>
 </div>
