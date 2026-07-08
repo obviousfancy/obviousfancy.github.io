@@ -1,23 +1,57 @@
 ---
 import '../styles/global.css'
-import Navbar from '../components/Navbar.astro'
+import Titlebar from '../components/react/Titlebar.tsx'
+import Sidebar from '../components/react/Sidebar.tsx'
+
+const { title = "obviousfancy · MejoLab" } = Astro.props
+const currentPath = Astro.url.pathname
 ---
 
 <html lang="es">
   <head>
-    <script is:inline>  
-      const temaGuardado = localStorage.getItem('theme') || 'dark';  //<!-- Cargamos el tema guardado en localStorage, o por defecto "dark" si no hay ninguno -->
-      document.documentElement.setAttribute('data-theme', temaGuardado);
+    <script is:inline>
+      const tema = localStorage.getItem('theme') || 'dark'
+      document.documentElement.setAttribute('data-theme', tema)
     </script>
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-      <meta charset="UTF-8" />   <!-- ← esta línea, sin ella se rompen tildes y ñ -->
-      <meta name="viewport" content="width=device-width" />
-    <title>Obviousfancy</title>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    >
+
+    <title>{title}</title>
   </head>
-  
-    <Navbar />
-    <slot />
+
+  <body data-theme="dark" data-palette="cyan" data-card="glass">
+
+    <!-- Sidebar FUERA del grid — es position: fixed overlay -->
+    <Sidebar client:load currentPath={currentPath} />
+
+    <div id="app">
+      <!-- Titlebar ocupa grid-row 1 y las tabs grid-row 2 -->
+      <Titlebar client:load currentPath={currentPath} />
+
+      <!-- Contenido principal en grid-row 3 -->
+      <main class="main">
+        <div class="viewport">
+          <slot />
+        </div>
+      </main>
+
+      <!-- Statusbar en grid-row 4 -->
+      <div class="statusbar">
+        <span class="item">● ready</span>
+        <span class="item">main</span>
+        <span class="spacer"></span>
+        <span class="item">UTF-8</span>
+        <span class="item">v0.4.2</span>
+      </div>
+    </div>
+
   </body>
 </html>

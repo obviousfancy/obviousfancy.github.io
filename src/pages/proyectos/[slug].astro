@@ -2,61 +2,209 @@
 import Layout from '../../layouts/Layout.astro'
 import { getCollection, render } from 'astro:content'
 
-// Defines qué páginas existen
-export async function getStaticPaths(){
-    const proyectos = await getCollection('proyectos')
-    return proyectos.map(proyecto => ({
-        params: { slug: proyecto.id },
-        props: { proyecto }  // Esto se pasa a la página como props
+export async function getStaticPaths() {
+    const blog = await getCollection('blog')
+    return blog.map(post => ({
+        params: { slug: post.id },
+        props: { post }
     }))
 }
 
-// Recibe el slug y los props de la función anterior
-const {proyecto} = Astro.props
-const {Content} = await render(proyecto)  // render es para convertir el markdown a HTML
-const { titulo, descripcion, tecnologias, hashtags, github, estado,youtube } = proyecto.data
+const { post } = Astro.props
+const { Content } = await render(post)
+const { titulo, autor, fecha, descripcion, tecnologias, hashtags, estado } = post.data
 
+const parseHashtags = (str: string) =>
+    str.split(/\s+/).filter(t => t.startsWith('#')).map(t => t.slice(1))
+
+const tags = parseHashtags(hashtags)
+
+const tiempoLectura = (desc: string) =>
+    Math.max(1, Math.ceil(desc.split(/\s+/).length / 200))
 ---
 
-<Layout>
-    <div class="max-w-3xl mx-auto px-8 py-16">          
-        <!-- max-w-3xl sirve para limitar el ancho máximo del contenedor mx-auto es para centrarlo 
-        px-8 y py-16 son para agregar padding horizontal y vertical respectivamente 
-        -->
-        <!-- Encabezado -->
-         <a href="/proyectos" class="text-gray-400 hover:text-white transition-colors duration-300 mb-4 inline-block">
-            ← Volver a proyectos
-         </a>
-        <!-- Título del proyecto -->
-        <h1 class="text-5xl font-bold mt-6">{titulo}</h1>
-        <!-- Descripción del proyecto -->   
-        <p class="text-gray-300 text-xl mt-4">{descripcion}</p>
+<Layout title={`${titulo} · blog · obviousfancy`}>
+  <div class="page">
 
-        <!-- Estado -->
-         <span class="mt-6 inline-block bg-blue-600 text-white text-sm px-3 py-1 rounded-full">
-            {estado}
-         </span>
+    <!-- Navegación de vuelta -->
+    <a
+      href="/blog"
+      style="display: inline-flex; align-items: center; gap: 6px; color: var(--fg-3); font-size: 12px; text-decoration: none; margin-bottom: 28px; transition: color 0.15s;"
+      onmouseover="this.style.color='var(--fg-0)'"
+      onmouseout="this.style.color='var(--fg-3)'"
+    >
+      ← blog/
+    </a>
 
-        <!-- Tecnologías utilizadas con espaciado entre ellas -->
-        <div class="flex gap-6 mt-6 flex-wrap ">
-            {tecnologias.map((tech: string) =>(
+    <!-- Encabezado del post -->
+    <div style="margin-bottom: 40px; max-width: 72ch;">
+      <h1 style="font-size: 30px; font-weight: 700; color: var(--fg-0); margin: 0 0 16px; font-family: var(--font-mono); line-height: 1.3;">
+        {titulo}
+      </h1>
 
-            <span class="bg-gray-700 text-gray-300 text-sm px-3 py-1 rounded-full">
-                {tech}
-            </span>
-            ))}
-        </div>
+      <!-- Meta: autor · fecha · tiempo -->
+      <div style="display: flex; align-items: center; gap: 10px; color: var(--fg-3); font-size: 11.5px; font-family: var(--font-mono); margin-bottom: 16px; flex-wrap: wrap;">
+        <span>{autor}</span>
+        <span style="color: var(--border);">·</span>
+        <span>{fecha.toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+        <span style="color: var(--border);">·</span>
+        <span>{tiempoLectura(descripcion)} min de lectura</span>
+      </div>
 
-         <!-- Markdown text-->
-        <div class="prose prose-invert mt-12">
-        <Content />
-        </div>
+      <!-- Descripción -->
+      <p style="color: var(--fg-2); font-family: var(--font-sans); font-size: 14px; line-height: 1.7; margin: 0 0 20px;">
+        {descripcion}
+      </p>
 
-        
-        <!-- Link al repo -->
-        <a href={github} class="mt-8 inline-block bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded transition">
-        Ver en GitHub →
-        </a>
-
+      <!-- Tags -->
+      <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+        {tags.map(tag => (
+          <span class="tag"># {tag}</span>
+        ))}
+      </div>
     </div>
+
+    <!-- Separador -->
+    <hr style="margin-bottom: 40px;" />
+
+    <!-- Contenido Markdown -->
+    <div class="prose-content">
+      <Content />
+    </div>
+
+    <!-- Footer del post -->
+    <div style="margin-top: 64px; padding-top: 24px; border-top: 1px solid var(--border-soft); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+      <a
+        href="/blog"
+        style="color: var(--fg-3); font-size: 12px; font-family: var(--font-mono); text-decoration: none; transition: color 0.15s;"
+        onmouseover="this.style.color='var(--fg-0)'"
+        onmouseout="this.style.color='var(--fg-3)'"
+      >
+        ← más posts
+      </a>
+      <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+        {tags.map(tag => (
+          <span class="tag"># {tag}</span>
+        ))}
+      </div>
+    </div>
+
+  </div>
 </Layout>
+
+<style>
+  .prose-content {
+    max-width: 72ch;
+    color: var(--fg-1);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .prose-content h2 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--fg-0);
+    font-family: var(--font-mono);
+    margin: 40px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .prose-content h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--fg-0);
+    font-family: var(--font-mono);
+    margin: 28px 0 12px;
+  }
+
+  .prose-content p {
+    margin: 0 0 16px;
+    color: var(--fg-1);
+  }
+
+  .prose-content a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .prose-content code {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    background: var(--bg-2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--accent-2);
+  }
+
+  .prose-content pre {
+    background: var(--bg-1);
+    border: 1px solid var(--border-soft);
+    border-radius: 6px;
+    padding: 16px;
+    overflow-x: auto;
+    margin: 16px 0;
+  }
+
+  .prose-content pre code {
+    background: transparent;
+    padding: 0;
+    color: var(--fg-1);
+    font-size: 12.5px;
+  }
+
+  .prose-content ul, .prose-content ol {
+    padding-left: 24px;
+    margin: 0 0 16px;
+  }
+
+  .prose-content li {
+    margin-bottom: 6px;
+    color: var(--fg-1);
+  }
+
+  .prose-content blockquote {
+    border-left: 2px solid var(--accent);
+    padding-left: 16px;
+    margin: 20px 0;
+    color: var(--fg-2);
+    font-style: italic;
+  }
+
+  .prose-content strong {
+    color: var(--fg-0);
+    font-weight: 600;
+  }
+
+  .prose-content hr { margin: 32px 0; }
+
+  .prose-content table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    margin: 20px 0;
+  }
+
+  .prose-content th {
+    text-align: left;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    color: var(--fg-3);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-family: var(--font-mono);
+  }
+
+  .prose-content td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border-soft);
+    color: var(--fg-1);
+  }
+
+  .prose-content tr:hover td {
+    background: color-mix(in oklch, var(--bg-1) 40%, transparent);
+  }
+</style>

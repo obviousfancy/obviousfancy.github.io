@@ -1,57 +1,115 @@
 ---
-import Layout from '../layouts/Layout.astro'          
-import TarjetaProyecto from '../components/Tarjetaproyecto.astro'      
+import Layout from '../layouts/Layout.astro'
 import { getCollection } from 'astro:content'
 
-const proyectos = await getCollection('blog')
-const proyectosOrdenados = proyectos.sort((a, b) => a.data.orden - b.data.orden) 
+const posts = await getCollection('blog')
+const postsOrdenados = posts.sort((a, b) =>
+    b.data.fecha.getTime() - a.data.fecha.getTime()
+)
+
+const parseHashtags = (str: string) =>
+    str.split(/\s+/).filter(t => t.startsWith('#')).map(t => t.slice(1))
+
+const tiempoLectura = (desc: string) =>
+    Math.max(1, Math.ceil(desc.split(/\s+/).length / 200))
 ---
-<!-- Importamos el layout para usarlo en esta página no necesitamos importar nada mas layout tiene todo-->
 
+<Layout title="blog/ · obviousfancy">
+  <div class="page">
 
-<Layout>
-    <!----------------------- Encabezado de la página ---------------------------------->
-    <div class="text-center py-16 px-8">
-        <h1 class="text-4xl font-bold">Mis Blogs</h1>
-        <h2 class="text-gray-300 text-xl mt-4">
-          STM32 · ESP32 · Raspberry Pi · Software · IoT
-        </h2>
+    <div class="page-head">
+      <div>
+        <h1 class="page-title">
+          <span class="pre">//</span>
+          blog
+          <span class="num">{postsOrdenados.length}</span>
+        </h1>
+        <div class="page-sub">
+          Posts largos. Pienso por escrito — los publico cuando ya están medianamente firmes.
+        </div>
+      </div>
     </div>
-    <!----------------------------------------------------------------------------------->
 
-    <!----------------------------------- Grid de tarjetas ------------------------------------------>
-    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 pb-16 max-w-6xl mx-auto">
-  
-        {proyectosOrdenados.map(Blog => (
-            <TarjetaProyecto 
-                titulo={Blog.data.titulo}
-                descripcion={Blog.data.descripcion}
-                tecnologias={Blog.data.tecnologias.join(' · ')}
-                slug={Blog.id}
-                hashtags={Blog.data.hashtags}
-                url={`/blog/${Blog.id}`}
+    <div style="display: flex; flex-direction: column;">
+      {postsOrdenados.map(post => {
+        const hashtags = parseHashtags(post.data.hashtags)
+        const minutos = tiempoLectura(post.data.descripcion)
+        return (
+          <a
+            href={`/blog/${post.id}`}
+            class="blog-row reveal"
+            style="display: grid; grid-template-columns: 100px 1fr 60px; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--border-soft); text-decoration: none; transition: background 0.12s; border-radius: 4px;"
+          >
+            <div style="color: var(--fg-3); font-size: 11px; font-family: var(--font-mono); padding-top: 4px;">
+              {post.data.fecha.toISOString().slice(0, 10)}
+            </div>
 
-            />
-        ))}
+            <div>
+              <div class="post-title" style="font-size: 16px; font-family: var(--font-mono); font-weight: 600; margin-bottom: 6px; transition: color 0.15s;">
+                {post.data.titulo}
+              </div>
+              <div style="color: var(--fg-1); font-family: var(--font-sans); font-size: 12.5px; line-height: 1.6; margin-bottom: 10px;">
+                {post.data.descripcion}
+              </div>
+              <div style="display: flex; flex-wrap: wrap; gap: 5px;">
+                {hashtags.map(tag => (
+                  <span class="tag"># {tag}</span>
+                ))}
+              </div>
+            </div>
 
-    </section>
-
-    <!------------------------------------------------------------------------------------------->
-
-    <!-- Aniadimos un espacio para poder  -->
-
-    <!------------------------------  Botones al final ----------------------------------------->
-    <div class="flex justify-center gap-6 pb-16">           <!-- gap sirve para crear un espacio entre los elementos, cada valor equivale a 4 px -->
-
-      <a href="https://github.com/obviousfancy" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded transition">
-        Github
-      </a>
-
-      <a href="/" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded transition">
-        Regresar a home
-      </a>
-
+            <div style="color: var(--fg-3); font-size: 11px; font-family: var(--font-mono); text-align: right; padding-top: 4px;">
+              {minutos} min
+            </div>
+          </a>
+        )
+      })}
     </div>
-    <!----------------------------------------------------------------------------------------->
 
+    <div style="display: flex; gap: 12px; margin-top: 48px; padding-bottom: 32px;">
+      <a
+        href="https://github.com/obviousfancy"
+        class="card-glass"
+        style="padding: 8px 24px; border-radius: 4px; color: var(--fg-0); font-size: 12px;"
+      >
+        GitHub →
+      </a>
+      <a
+        href="/"
+        style="padding: 8px 24px; border-radius: 4px; background: var(--accent); color: var(--bg-0); font-size: 12px;"
+      >
+        ← Inicio
+      </a>
+    </div>
+
+  </div>
 </Layout>
+
+<style>
+  /* Título del post cambia a accent al hacer hover en la fila */
+  .blog-row .post-title {
+    color: var(--fg-0);
+  }
+  .blog-row:hover .post-title {
+    color: var(--accent);
+  }
+
+  /* Línea separadora se ilumina en hover */
+  .blog-row:hover {
+    background: color-mix(in oklch, var(--bg-1) 40%, transparent);
+    padding-left: 8px;
+  }
+</style>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in')
+        io.unobserve(e.target)
+      }
+    })
+  }, { threshold: 0.08 })
+
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el))
+</script>

@@ -1,56 +1,73 @@
 ---
-import Layout from '../layouts/Layout.astro'          
-import TarjetaProyecto from '../components/Tarjetaproyecto.astro'      
+import Layout from '../layouts/Layout.astro'
+import ProjectCard from '../components/react/ProjectCard.tsx'
 import { getCollection } from 'astro:content'
 
 const proyectos = await getCollection('proyectos')
-const proyectosOrdenados = proyectos.sort((a, b) => a.data.orden - b.data.orden) 
+const proyectosOrdenados = proyectos.sort((a, b) => a.data.orden - b.data.orden)
+
+const estadoToStatus = (estado: string): 'ship' | 'beta' | 'alpha' | 'wip' => {
+    if (estado === 'Completado') return 'ship'
+    if (estado === 'En desarrollo') return 'wip'
+    if (estado === 'Pausado') return 'alpha'
+    return 'wip'
+}
 ---
-<!-- Importamos el layout para usarlo en esta página no necesitamos importar nada mas layout tiene todo-->
 
+<Layout title="proyectos/ · obviousfancy">
+  <div class="page">
 
-<Layout>
-    <!----------------------- Encabezado de la página ---------------------------------->
-    <div class="text-center py-16 px-8">
-        <h1 class="text-4xl font-bold">Mis Proyectos</h1>
-        <h2 class="text-gray-300 text-xl mt-4">
-          STM32 · ESP32 · Raspberry Pi · Software · IoT
-        </h2>
+    <div class="page-head">
+      <div>
+        <h1 class="page-title">
+          <span class="pre">//</span>
+          proyectos
+          <span class="num">{proyectosOrdenados.length}</span>
+        </h1>
+        <div class="page-sub">
+          Hardware · Firmware · Software companion
+        </div>
+      </div>
     </div>
-    <!----------------------------------------------------------------------------------->
 
-    <!----------------------------------- Grid de tarjetas ------------------------------------------>
-    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-8 pb-16 max-w-6xl mx-auto">
-  
-        {proyectosOrdenados.map(proyecto => (
-            <TarjetaProyecto 
-                titulo={proyecto.data.titulo}
-                descripcion={proyecto.data.descripcion}
-                tecnologias={proyecto.data.tecnologias.join(' · ')}
-                slug={proyecto.id}
-                hashtags={proyecto.data.hashtags}
-                url={`/proyectos/${proyecto.id}`}
-            />
-        ))}
-
-    </section>
-
-    <!------------------------------------------------------------------------------------------->
-
-
-
-    <!------------------------------  Botones al final ----------------------------------------->
-    <div class="flex justify-center gap-6 pb-16">           <!-- gap sirve para crear un espacio entre los elementos, cada valor equivale a 4 px -->
-
-      <a href="https://github.com/obviousfancy" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded transition">
-        Github
-      </a>
-
-      <a href="/" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded transition">
-        Regresar a home
-      </a>
-
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; align-items: start;">
+      {proyectosOrdenados.map(proyecto => (
+        <ProjectCard
+          client:visible
+          id={proyecto.id}
+          title={proyecto.data.titulo}
+          year="2026"
+          tag={proyecto.data.tecnologias.slice(0, 3).join(' · ')}
+          summary={proyecto.data.descripcion}
+          stack={proyecto.data.tecnologias}
+          status={estadoToStatus(proyecto.data.estado)}
+          role="solo"
+          color="accent"
+          metrics={[
+            { k: 'estado', v: proyecto.data.estado },
+            { k: 'stack', v: String(proyecto.data.tecnologias.length) + ' techs' },
+            { k: 'orden', v: String(proyecto.data.orden) },
+          ]}
+          url={`/proyectos/${proyecto.id}`}
+        />
+      ))}
     </div>
-    <!----------------------------------------------------------------------------------------->
 
+    <div style="display: flex; gap: 12px; margin-top: 48px; padding-bottom: 32px;">
+      <a
+        href="https://github.com/obviousfancy"
+        class="card-glass"
+        style="padding: 8px 24px; border-radius: 4px; color: var(--fg-0); font-size: 12px;"
+      >
+        GitHub →
+      </a>
+      <a
+        href="/"
+        style="padding: 8px 24px; border-radius: 4px; background: var(--accent); color: var(--bg-0); font-size: 12px;"
+      >
+        ← Inicio
+      </a>
+    </div>
+
+  </div>
 </Layout>
