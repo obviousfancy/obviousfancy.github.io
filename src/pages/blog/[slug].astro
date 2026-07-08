@@ -2,61 +2,68 @@
 import Layout from '../../layouts/Layout.astro'
 import { getCollection, render } from 'astro:content'
 
-// Defines qué páginas existen
 export async function getStaticPaths(){
     const blog = await getCollection('blog')
     return blog.map(post => ({
         params: { slug: post.id },
-        props: { post }  // Esto se pasa a la página como props
+        props: { post }
     }))
 }
 
-// Recibe el slug y los props de la función anterior
-const {post} = Astro.props
-const {Content} = await render(post)  // render es para convertir el markdown a HTML
-const { titulo, autor, fecha,descripcion, tecnologias, hashtags, github, estado,orden,youtube, imagen} = post.data
+const { post } = Astro.props
+const { Content } = await render(post)
+const { titulo, descripcion, tecnologias, hashtags, github, estado, fecha } = post.data
 
+const parseHashtags = (str: string) =>
+    str.split(/\s+/).filter(t => t.startsWith('#')).map(t => t.slice(1))
+const hashtags_parsed = parseHashtags(hashtags)
 ---
 
-<Layout>
-    <div class="max-w-3xl mx-auto px-8 py-16">          
-        <!-- max-w-3xl sirve para limitar el ancho máximo del contenedor mx-auto es para centrarlo 
-        px-8 y py-16 son para agregar padding horizontal y vertical respectivamente 
-        -->
-        <!-- Encabezado -->
-         <a href="/blog" class="text-gray-400 hover:text-white transition-colors duration-300 mb-4 inline-block">
-            ← Volver a Blogs
-         </a>
-        <!-- Título del proyecto -->
-        <h1 class="text-5xl font-bold mt-6">{titulo}</h1>
-        <!-- Descripción del proyecto -->   
-        <p class="text-gray-300 text-xl mt-4">{descripcion}</p>
+<Layout title={`${titulo} · obviousfancy`}>
+  <div class="page" style="max-width: 860px;">
 
-        <!-- Estado -->
-         <span class="mt-6 inline-block bg-blue-600 text-white text-sm px-3 py-1 rounded-full">
-            {estado}
-         </span>
+    <a href="/blog" style="color: var(--fg-3); font-size: 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 24px;">
+      ← blog/
+    </a>
 
-        <!-- Tecnologías utilizadas con espaciado entre ellas -->
-        <div class="flex gap-6 mt-6 flex-wrap ">
-            {tecnologias.map((tech: string) =>(
+    <div style="margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border-soft);">
+      <div style="color: var(--fg-3); font-size: 11px; font-family: var(--font-mono); margin-bottom: 12px;">
+        {fecha.toISOString().slice(0, 10)}
+      </div>
 
-            <span class="bg-gray-700 text-gray-300 text-sm px-3 py-1 rounded-full">
-                {tech}
-            </span>
-            ))}
-        </div>
+      <h1 style="font-size: 1.9rem; font-weight: 700; color: var(--fg-0); font-family: var(--font-mono); margin: 0 0 12px; line-height: 1.25;">
+        {titulo}
+      </h1>
 
-         <!-- Markdown text-->
-        <div class="prose prose-invert mt-12">
-        <Content />
-        </div>
+      <p style="color: var(--fg-2); font-family: var(--font-sans); font-size: 15px; line-height: 1.6; margin: 0 0 18px;">
+        {descripcion}
+      </p>
 
-        
-        <!-- Link al repo -->
-        <a href={github} class="mt-8 inline-block bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded transition">
-        Ver en GitHub →
-        </a>
-
+      <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center;">
+        <span class={`tag ${estado === 'Completado' ? 'accent-2' : estado === 'En desarrollo' ? 'accent' : ''}`}>
+          {estado}
+        </span>
+        {hashtags_parsed.map(tag => (
+          <span class="tag"># {tag}</span>
+        ))}
+      </div>
     </div>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    {github && (
+      <div style="margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border-soft);">
+        <a
+          href={github}
+          class="card-glass"
+          style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 4px; color: var(--fg-0); font-size: 12px; font-family: var(--font-mono);"
+        >
+          Ver en GitHub →
+        </a>
+      </div>
+    )}
+
+  </div>
 </Layout>
